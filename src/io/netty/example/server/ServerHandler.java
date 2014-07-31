@@ -29,6 +29,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Object> {
             handleHttpRequest(ctx, (FullHttpRequest) fullHttpRequest);
             String uri = ((FullHttpRequest) msg).getUri();
             String uris[] = uri.split("/");
+            ctx.channel().writeAndFlush(new TextWebSocketFrame("Http服务端返回信息 "+ uri));
         } else if (msg instanceof WebSocketFrame) {
             handleWebSocketFrame(ctx, (WebSocketFrame) msg);
         }
@@ -52,7 +53,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Object> {
 
         // Handshake
         WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
-                "ws://localhost:8080/websocket", null, false);
+                "wss://localhost:8080/websocket", null, false);
         handshaker = wsFactory.newHandshaker(req);
         if (handshaker == null) {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
