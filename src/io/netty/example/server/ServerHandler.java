@@ -80,7 +80,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Object> {
         if ((frame instanceof TextWebSocketFrame)) {
         	String text = ((TextWebSocketFrame)frame).text();
         	System.out.println(text);
-        	ctx.channel().writeAndFlush(new TextWebSocketFrame("服务端返回信息 "+ new Date()));
+        	ctx.channel().writeAndFlush(new TextWebSocketFrame("WebSocket服务端返回信息 "+ new Date()));
         }
 
     }
