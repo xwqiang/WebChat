@@ -10,8 +10,8 @@ public class TextFrameHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	@Override
 	protected void channelRead0(ChannelHandlerContext arg0,
 			TextWebSocketFrame arg1) throws Exception {
-		System.out.println("TextWebSocketFrame"+arg1.text());
-		
+		System.out.println("TextWebSocketFrame: "+arg1.hashCode()+"  "+arg1.text());
+		arg0.writeAndFlush(new TextWebSocketFrame("huifu"));
 	}
 
 

@@ -39,10 +39,11 @@ public class WebSocketServer {
 									ChannelPipeline pipeline = ch.pipeline();
 									pipeline.addLast("newHttpServerCodec", new HttpServerCodec());
 									pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
+									pipeline.addLast("httpHandler",new HttpProtococolHandler());//自定义处理http转化为websocket请求之前的逻辑
 									pipeline.addLast("websocket", new WebSocketServerProtocolHandler("/websocket"));
 									
-									pipeline.addLast("textFrameHandler", new TextFrameHandler());
 									pipeline.addLast("binaryFrameHandler", new BinaryFrameHandler());
+									pipeline.addLast("textFrameHandler", new TextFrameHandler());
 							        pipeline.addLast("ContinuationFrameHandler",new ContinuationFrameHandler());
 								}
 
@@ -51,7 +52,7 @@ public class WebSocketServer {
 
 			// Bind and start to accept incoming connections.
 			ChannelFuture f = b.bind(port).sync(); // (7)
-			System.out.println("aaaaaaaaaaaaaaaaaaa");
+			System.out.println("server started");
 			// Wait until the server socket is closed.
 			// In this example, this does not happen, but you can do that to
 			// gracefully
